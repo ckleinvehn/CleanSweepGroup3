@@ -7,5 +7,9 @@ public class Main {
         SensorSimulator sensors = new SensorSimulator(floorPlan, location);
 
         sensors.print();
+        Location startingLocation = new Location(0, 0);
+        SensorSimulator sensor = new SensorSimulator(floorPlan, startingLocation);
+
+        sensor.print();
     }
 }

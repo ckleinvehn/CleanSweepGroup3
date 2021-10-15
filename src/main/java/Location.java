@@ -14,5 +14,4 @@ public class Location {
     public int getY() {
         return y;
     }
-
 }

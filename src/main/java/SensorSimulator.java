@@ -132,6 +132,15 @@ public class SensorSimulator {
     //if 1, decrement dirt and increase value to 2.
 
     TURN OFF: Once all values in this map or whatever data structure are 2, turn off
+
+    }
+     */
+
+    /* public HashMap<Location, Integer>
+    public HashMap<Location, Integer> visitedCells(){;
+    //something like: while state.ON -> for every "move" from one cell to another,
+    //check whether coordinates are in the map. if not,drop in the coordinates as key
+    //and a 1 for visited. If the coordinates already exist, check whether
     }
      */
 
@@ -151,4 +160,5 @@ public class SensorSimulator {
 
         System.out.println("------------------");
     }
+
 }
