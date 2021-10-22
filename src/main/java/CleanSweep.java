@@ -1,15 +1,22 @@
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Stack;
+
 import static java.lang.Thread.sleep;
 
 public class CleanSweep {
+
     private double battery;
     private double currCapacity;
     private double totalCapacity = 50.0;
     public FloorCell currentLocation;
     public FloorCell previousLocation;
+    public Location startingLocation;
     public SensorSimulator sensors;
     public Location location; //starting location
     private CleanSweep cleanSweep = null;
     public State currentState;
+    public Stack<Location> traversalStack = new Stack<>();
 
 
     public CleanSweep(Double battery, double currCapacity, SensorSimulator sensors, FloorCell currentLocation, FloorCell previousLocation) {
@@ -83,7 +90,7 @@ public class CleanSweep {
             System.out.println("Cleaning... " + currentLocation.dirtAmount + " units of dirt left");
             currentLocation.dirtAmount--;
             currCapacity++;
-            sleep(1000);
+            //sleep(1000);
 
 
         }
@@ -158,13 +165,27 @@ public class CleanSweep {
         currentLocation = sensors.floorPlan.floorLayout.get(x).get(y);
     }
 
+    public void goToCharger() {
+       while(!traversalStack.isEmpty()){
+           Location togo = traversalStack.pop();
+           int x = togo.x;
+           int y = togo.y;
+           sensors.currentLocation = new Location(x, y);
+           updateCurrentCell();
+       }
+
+
+    }
+
     public void zigZag() throws InterruptedException {
         Direction direction = Direction.SOUTH;
-        sleep(1000);
+        //sleep(1000);
         suckUpDirt();
-        sleep(1000);
+        //sleep(1000);
         useBattery();
-        sleep(1000);
+        //sleep(1000);
+        startingLocation = sensors.currentLocation;
+        traversalStack.push(sensors.currentLocation);
         sensors.floorPlan.print();
 
         while (!(sensors.isEastWall() && sensors.isSouthWall())) {
@@ -179,23 +200,34 @@ public class CleanSweep {
                     direction = Direction.SOUTH;
                 }
             }
-            sleep(1000);
+            traversalStack.push(sensors.currentLocation);
+            //sleep(1000);
             suckUpDirt();
-            sleep(1000);
+            //sleep(1000);
             useBattery();
-            sleep(1000);
+            //sleep(1000);
             sensors.floorPlan.print();
 
             System.out.format("Current Location \n x: %d, y: %d\n", sensors.currentLocation.x, sensors.currentLocation.y);
+
         }
     }
 
     public void turnOn() {
         try {
             zigZag();
+            for (Location f : traversalStack) {
+                System.out.println(f.x+","+f.y);
+            }
+            goToCharger();
+            for (Location f : traversalStack) {
+                System.out.println(f.x+","+f.y);
+            }
+            System.out.println("Back to Charger, location:" + sensors.currentLocation.x +","+ sensors.currentLocation.y);
         } catch (InterruptedException e) {
             System.out.println("CleanSweep cannot be turned on. Please contact customer support.");
             e.printStackTrace();
+
         }
     }
 }
