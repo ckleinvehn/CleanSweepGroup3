@@ -172,6 +172,7 @@ public class CleanSweep {
            int y = togo.y;
            sensors.currentLocation = new Location(x, y);
            updateCurrentCell();
+           System.out.println("moving to location" + "("+x+","+y+")");
        }
 
 
@@ -216,8 +217,9 @@ public class CleanSweep {
     public void turnOn() {
         try {
             zigZag();
+            System.out.println("TraveralStack:");
             for (Location f : traversalStack) {
-                System.out.println(f.x+","+f.y);
+                System.out.print("("+f.x+","+f.y+") ->");
             }
             goToCharger();
             for (Location f : traversalStack) {
