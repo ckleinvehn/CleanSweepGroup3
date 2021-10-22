@@ -221,10 +221,13 @@ public class CleanSweep {
             for (Location f : traversalStack) {
                 System.out.print("("+f.x+","+f.y+") ->");
             }
+            System.out.println("\n");
             goToCharger();
+
             for (Location f : traversalStack) {
                 System.out.println(f.x+","+f.y);
             }
+
             System.out.println("Back to Charger, location:" + sensors.currentLocation.x +","+ sensors.currentLocation.y);
         } catch (InterruptedException e) {
             System.out.println("CleanSweep cannot be turned on. Please contact customer support.");
