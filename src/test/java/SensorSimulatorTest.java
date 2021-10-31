@@ -20,7 +20,7 @@ public class SensorSimulatorTest {
         Location startingLocation = new Location(0, 0);
         SensorSimulator sensor = new SensorSimulator(oneRoom, startingLocation);
         CleanSweep cs = new CleanSweep(250.0, 0, sensor, oneRoom.floorLayout.get(0).get(0), oneRoom.floorLayout.get(0).get(0));
-        cs.sensors.getTraversableDirections(startingLocation);
+        cs.sensors.getTraversableDirections();
     }
 
     @Test
